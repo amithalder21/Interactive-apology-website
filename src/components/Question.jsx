@@ -17,13 +17,17 @@ const Question = ({ onNotAngry }) => {
           Are you still angry with me?
         </h2>
 
+        <p className="mt-3 text-lg text-marigold/90 sm:text-xl">
+          Or do you still miss your Bunny?
+        </p>
+
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <button
             type="button"
             onClick={onNotAngry}
             className="rounded-full bg-gradient-to-r from-rose to-marigold px-10 py-3.5 text-lg font-semibold text-night shadow-glow transition-transform duration-300 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream"
           >
-            Not anymore
+            I miss you more
           </button>
 
           <button
@@ -31,7 +35,7 @@ const Question = ({ onNotAngry }) => {
             onClick={() => setStillAngry(true)}
             className="rounded-full px-8 py-3.5 text-lg font-medium text-cream/70 ring-1 ring-cream/20 transition-colors hover:text-cream hover:ring-cream/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream"
           >
-            A little, still
+            Still a little angry
           </button>
         </div>
 

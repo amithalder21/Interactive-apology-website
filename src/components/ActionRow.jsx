@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HUG_MESSAGE, callLink, whatsappLink } from "../data/contact";
+import { HUG_MESSAGE, whatsappLink } from "../data/contact";
 
 const linkClass =
   "rounded-full px-6 py-3 text-sm font-semibold transition-transform duration-300 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream";
@@ -36,10 +36,6 @@ const ActionRow = ({ withReply = true }) => {
           Message me on WhatsApp
         </a>
 
-        <a href={callLink} className={`${linkClass} text-cream/80 ring-1 ring-cream/25 hover:text-cream`}>
-          Call me
-        </a>
-
         <a
           href={whatsappLink(HUG_MESSAGE)}
           target="_blank"
@@ -49,10 +45,6 @@ const ActionRow = ({ withReply = true }) => {
           Send a hug to Ammy
         </a>
       </div>
-
-      <p className="mt-4 text-xs leading-relaxed text-cream/40">
-        Each of these opens your own app with the message ready. Nothing is sent until you send it.
-      </p>
     </div>
   );
 };
