@@ -16,8 +16,9 @@ function App() {
   const [started, setStarted] = useState(false);
   const [musicOn, setMusicOn] = useState(false);
 
-  const begin = useCallback((withMusic) => {
-    setMusicOn(withMusic);
+  // The opening tap is what lets the browser play audio, so the track starts here.
+  const begin = useCallback(() => {
+    setMusicOn(true);
     setStarted(true);
   }, []);
 

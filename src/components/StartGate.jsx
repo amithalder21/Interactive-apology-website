@@ -1,22 +1,15 @@
 import { useEffect, useRef } from "react";
 
-// Shown before the first chapter. The top corner control is easy to miss, so
-// the choice about sound is made here instead, where it cannot be. Her tap is
-// also the gesture browsers require before audio is allowed to play, so
-// starting from this screen actually works rather than being refused.
+// Shown before the first chapter. The single button is the gesture browsers
+// require before audio is allowed to play, so the track starts reliably here
+// rather than being refused. It is focused on open, so Enter works without
+// reaching for the mouse.
 const StartGate = ({ onBegin }) => {
   const primaryRef = useRef(null);
 
   useEffect(() => {
     primaryRef.current?.focus();
-
-    const onKey = (e) => {
-      if (e.key === "Escape") onBegin(false);
-    };
-
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onBegin]);
+  }, []);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-night/80 px-5 backdrop-blur-sm">
@@ -34,25 +27,17 @@ const StartGate = ({ onBegin }) => {
 
         <p className="mt-4 text-base leading-relaxed text-night/70">
           Eight chapters, and about four minutes of your time. There is a song underneath it,
-          if you want it. You can turn it off at any point.
+          which you can turn off at any point with the speaker in the corner.
         </p>
 
-        <div className="mt-8 flex flex-col gap-3">
+        <div className="mt-8">
           <button
             ref={primaryRef}
             type="button"
-            onClick={() => onBegin(true)}
-            className="rounded-full bg-gradient-to-r from-rose to-marigold px-8 py-3.5 text-base font-semibold text-night shadow-lg transition-transform duration-300 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-plum"
+            onClick={onBegin}
+            className="w-full rounded-full bg-gradient-to-r from-rose to-marigold px-8 py-3.5 text-base font-semibold text-night shadow-lg transition-transform duration-300 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-plum"
           >
-            Begin with the music
-          </button>
-
-          <button
-            type="button"
-            onClick={() => onBegin(false)}
-            className="rounded-full px-8 py-3 text-base font-medium text-night/60 ring-1 ring-night/15 transition-colors hover:text-night hover:ring-night/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-plum"
-          >
-            Begin in silence
+            Begin
           </button>
         </div>
       </div>
