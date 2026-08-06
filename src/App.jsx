@@ -67,7 +67,7 @@ function App() {
           />
         )}
 
-        {phase === PHASES.QUESTION && <Question onYes={() => setPhase(PHASES.FINAL)} />}
+        {phase === PHASES.QUESTION && <Question onNotAngry={() => setPhase(PHASES.FINAL)} />}
 
         {phase === PHASES.FINAL && <FinalScreen onReplay={replay} />}
       </main>
