@@ -25,11 +25,6 @@ function App() {
 
   const back = useCallback(() => setCurrent((i) => Math.max(0, i - 1)), []);
 
-  const replay = () => {
-    setCurrent(0);
-    setPhase(PHASES.STORY);
-  };
-
   // Arrow keys page through the chapters.
   useEffect(() => {
     if (phase !== PHASES.STORY) return;
@@ -69,7 +64,7 @@ function App() {
 
         {phase === PHASES.QUESTION && <Question onNotAngry={() => setPhase(PHASES.FINAL)} />}
 
-        {phase === PHASES.FINAL && <FinalScreen onReplay={replay} />}
+        {phase === PHASES.FINAL && <FinalScreen />}
       </main>
 
       <footer className="relative z-10 px-5 pb-8 pt-2">
