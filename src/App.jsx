@@ -6,12 +6,20 @@ import Chapter from "./components/Chapter";
 import ProgressDots from "./components/ProgressDots";
 import Question from "./components/Question";
 import FinalScreen from "./components/FinalScreen";
+import StartGate from "./components/StartGate";
 
 const PHASES = { STORY: "story", QUESTION: "question", FINAL: "final" };
 
 function App() {
   const [phase, setPhase] = useState(PHASES.STORY);
   const [current, setCurrent] = useState(0);
+  const [started, setStarted] = useState(false);
+  const [musicOn, setMusicOn] = useState(false);
+
+  const begin = useCallback((withMusic) => {
+    setMusicOn(withMusic);
+    setStarted(true);
+  }, []);
 
   const next = useCallback(() => {
     setCurrent((i) => {
@@ -25,9 +33,9 @@ function App() {
 
   const back = useCallback(() => setCurrent((i) => Math.max(0, i - 1)), []);
 
-  // Arrow keys page through the chapters.
+  // Arrow keys page through the chapters, once she is past the opening screen.
   useEffect(() => {
-    if (phase !== PHASES.STORY) return;
+    if (phase !== PHASES.STORY || !started) return;
 
     const onKey = (e) => {
       if (e.key === "ArrowRight") next();
@@ -36,7 +44,7 @@ function App() {
 
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [phase, next, back]);
+  }, [phase, started, next, back]);
 
   return (
     // overflow-x only: clipping the y-axis would hide the controls on short screens
@@ -47,7 +55,9 @@ function App() {
 
       <FloatingElements />
 
-      <Navbar />
+      <Navbar musicOn={musicOn} onToggleMusic={() => setMusicOn((on) => !on)} />
+
+      {!started && <StartGate onBegin={begin} />}
 
       <main className="relative z-10 flex flex-1 items-center justify-center px-5 py-8 sm:px-8">
         {phase === PHASES.STORY && (

@@ -2,7 +2,7 @@ import BackgroundMusic from "./BackgroundMusic";
 
 // Navbar is mounted for the whole session, so the audio element lives here and
 // the track survives moving between chapters.
-const Navbar = () => (
+const Navbar = ({ musicOn, onToggleMusic }) => (
   <header className="relative z-10 flex items-center justify-between gap-4 px-5 py-4 sm:px-10 sm:py-6">
     <h1 className="text-xl font-semibold tracking-tight text-cream sm:text-2xl">Bunny</h1>
 
@@ -11,7 +11,7 @@ const Navbar = () => (
         Our story
       </p>
 
-      <BackgroundMusic />
+      <BackgroundMusic enabled={musicOn} onToggle={onToggleMusic} />
     </div>
   </header>
 );
