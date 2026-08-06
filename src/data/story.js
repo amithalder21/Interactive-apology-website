@@ -6,8 +6,8 @@ export const story = [
   {
     slug: "nehru-place",
     chapter: "Chapter One",
-    place: "Nehru Place",
-    text: "Sab kuch yahin se shuru hua tha — Nehru Place ki bheed mein. Pehli mulaqat, thodi si nervousness, aur ek smile jo mujhe aaj tak yaad hai ✨",
+    place: "CR Park → Nehru Place",
+    text: "Sab kuch yahin se shuru hua tha — office ke baad wali hamari pehli outing. CR Park mein woh pizza dosa, aur phir Nehru Place ki bheed. Main thoda sa nervous tha... aur tumne ek aisa joke mara jo mujhe aaj tak yaad hai ✨",
   },
   {
     slug: "illusions",
