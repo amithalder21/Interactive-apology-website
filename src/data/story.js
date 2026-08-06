@@ -7,7 +7,7 @@ import img5 from "../assets/images/img5.jpg";
 export const story = [
   {
     image: img1,
-    text: "Hiiii Goluuuu, Just wanted to tell you somethingggg...",
+    text: "Hiiii Bunnyyyy, Just wanted to tell you somethingggg...",
   },
   {
     image: img2,
@@ -23,6 +23,6 @@ export const story = [
   },
   {
     image: img5,
-    text: "Yeah, sometimes I do things that make you angry, and I am sorry for that. But just like this image, I choose US. So maaf kar de goluu ❤️",
+    text: "Yeah, sometimes I do things that make you angry, and I am sorry for that. But just like this image, I choose US. So maaf kar de bunnyy ❤️",
   },
 ];
