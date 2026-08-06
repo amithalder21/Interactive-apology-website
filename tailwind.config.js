@@ -23,21 +23,9 @@ export default {
           "0%": { opacity: "0", transform: "translateY(18px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        confetti: {
-          "0%": { opacity: "0", transform: "translateY(-10px) rotate(0deg)" },
-          "15%": { opacity: "1" },
-          "100%": { opacity: "0", transform: "translateY(110px) rotate(320deg)" },
-        },
-        pop: {
-          "0%": { transform: "scale(0.4)", opacity: "0" },
-          "60%": { transform: "scale(1.15)", opacity: "1" },
-          "100%": { transform: "scale(1)", opacity: "1" },
-        },
       },
       animation: {
         "chapter-in": "chapter-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both",
-        confetti: "confetti 2.4s ease-in infinite",
-        pop: "pop 700ms cubic-bezier(0.22, 1, 0.36, 1) both",
       },
     },
   },

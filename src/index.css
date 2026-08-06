@@ -14,10 +14,10 @@
     opacity: 0;
   }
   10% {
-    opacity: 0.45;
+    opacity: 0.35;
   }
   50% {
-    opacity: 0.6;
+    opacity: 0.5;
   }
   100% {
     transform: translateY(-120vh) scale(1.2);
@@ -34,9 +34,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .floating-element,
-  .animate-chapter-in,
-  .animate-confetti,
-  .animate-pop {
+  .animate-chapter-in {
     animation: none !important;
   }
 

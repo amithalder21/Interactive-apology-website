@@ -1,30 +1,29 @@
-const elements = ["💗", "✨", "🎬", "💖", "🫂", "🌙"];
-
-// Positions are fixed rather than random so the drift doesn't reshuffle on
-// every re-render of the parent.
-const drops = Array.from({ length: 18 }).map((_, i) => ({
-  left: (i * 37) % 100,
-  delay: (i * 1.7) % 12,
-  duration: 16 + ((i * 5) % 10),
-  size: 16 + ((i * 7) % 18),
-  emoji: elements[i % elements.length],
+// Replaces the drifting emoji with quiet points of light, so the background
+// carries the same warmth without competing with the writing.
+const motes = Array.from({ length: 22 }).map((_, i) => ({
+  left: (i * 41) % 100,
+  delay: (i * 1.9) % 14,
+  duration: 20 + ((i * 5) % 14),
+  size: 2 + ((i * 3) % 4),
+  warm: i % 3 === 0,
 }));
 
 const FloatingElements = () => (
   <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-    {drops.map((d, i) => (
+    {motes.map((m, i) => (
       <span
         key={i}
-        className="floating-element absolute bottom-[-40px]"
+        className={`floating-element absolute bottom-[-40px] rounded-full ${
+          m.warm ? "bg-marigold" : "bg-rose"
+        }`}
         style={{
-          left: `${d.left}%`,
-          animationDelay: `${d.delay}s`,
-          animationDuration: `${d.duration}s`,
-          fontSize: `${d.size}px`,
+          left: `${m.left}%`,
+          width: `${m.size}px`,
+          height: `${m.size}px`,
+          animationDelay: `${m.delay}s`,
+          animationDuration: `${m.duration}s`,
         }}
-      >
-        {d.emoji}
-      </span>
+      />
     ))}
   </div>
 );

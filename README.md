@@ -126,8 +126,8 @@ say-sorry-website/
 ## **Adding Artwork**
 
 Each chapter looks for `src/assets/memories/<slug>.(jpg|png|webp)`, where the
-slug matches `src/data/story.js` — `nehru-place`, `illusions`, `tom-jerry`,
-`saket-evening`, `metro-hug`, `movie-call`, `sorry`.
+slug matches `src/data/story.js`: `nehru-place`, `holi-lockdown`, `tom-jerry`,
+`saket-evening`, `tom-jerry-theatre`, `metro-hug`, `cp-cab`, `sorry`.
 
 Drop a file in and it appears on the next build. No import, no code change.
 Chapters without a file show generated SVG art, so the site is never broken
