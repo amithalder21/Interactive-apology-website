@@ -1,48 +1,82 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { story } from "./data/story";
-import Frame from "./components/Frame";
 import Navbar from "./components/Navbar";
 import FloatingElements from "./components/FloatingElements";
+import Chapter from "./components/Chapter";
+import ProgressDots from "./components/ProgressDots";
 import Question from "./components/Question";
 import FinalScreen from "./components/FinalScreen";
 
+const PHASES = { STORY: "story", QUESTION: "question", FINAL: "final" };
+
 function App() {
+  const [phase, setPhase] = useState(PHASES.STORY);
   const [current, setCurrent] = useState(0);
-  const [showQuestion, setShowQuestion] = useState(false);
-  const [showFinal, setShowFinal] = useState(false);
+
+  const next = useCallback(() => {
+    setCurrent((i) => {
+      if (i === story.length - 1) {
+        setPhase(PHASES.QUESTION);
+        return i;
+      }
+      return i + 1;
+    });
+  }, []);
+
+  const back = useCallback(() => setCurrent((i) => Math.max(0, i - 1)), []);
 
   const replay = () => {
     setCurrent(0);
-    setShowQuestion(false);
-    setShowFinal(false);
+    setPhase(PHASES.STORY);
   };
 
+  // Arrow keys page through the chapters.
+  useEffect(() => {
+    if (phase !== PHASES.STORY) return;
+
+    const onKey = (e) => {
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") back();
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [phase, next, back]);
+
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-pink-200 via-purple-200 to-pink-300 relative overflow-hidden">
-      {/* live background hearts/candy/teddy */}
+    // overflow-x only: clipping the y-axis would hide the controls on short screens
+    <div className="relative flex min-h-dvh flex-col overflow-x-hidden bg-night text-cream">
+      {/* warm Delhi-evening wash */}
+      <div className="pointer-events-none absolute -left-40 -top-40 h-[32rem] w-[32rem] rounded-full bg-plum opacity-50 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-48 -right-32 h-[32rem] w-[32rem] rounded-full bg-rose opacity-20 blur-3xl" />
+
       <FloatingElements />
 
       <Navbar />
 
-      {!showQuestion && !showFinal && (
-        <Frame
-          image={story[current].image}
-          text={story[current].text}
-          onNext={() => {
-            if (current === story.length - 1) {
-              setShowQuestion(true);
-            } else {
-              setCurrent((p) => p + 1);
-            }
-          }}
-        />
-      )}
+      <main className="relative z-10 flex flex-1 items-center justify-center px-5 py-8 sm:px-8">
+        {phase === PHASES.STORY && (
+          <Chapter
+            key={story[current].slug}
+            memory={story[current]}
+            index={current}
+            total={story.length}
+            onNext={next}
+            onBack={back}
+            isLast={current === story.length - 1}
+          />
+        )}
 
-      {showQuestion && !showFinal && (
-        <Question onYes={() => setShowFinal(true)} />
-      )}
+        {phase === PHASES.QUESTION && <Question onYes={() => setPhase(PHASES.FINAL)} />}
 
-      {showFinal && <FinalScreen onReplay={replay} />}
+        {phase === PHASES.FINAL && <FinalScreen onReplay={replay} />}
+      </main>
+
+      <footer className="relative z-10 px-5 pb-8 pt-2">
+        {phase === PHASES.STORY && (
+          <ProgressDots total={story.length} current={current} onJump={setCurrent} />
+        )}
+      </footer>
     </div>
   );
 }

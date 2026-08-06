@@ -85,19 +85,29 @@ The goal is simple:
 ```
 say-sorry-website/
 │
+├── .github/workflows/
+│   ├── ci.yml               # lint + build
+│   └── deploy.yml           # Vercel deploy (preview + production)
+│
 ├── src/
 │   ├── assets/
-│   │   └── images/          # Story images + celebration image
+│   │   ├── memories/        # chapter artwork, one file per slug
+│   │   └── images/          # older illustrations
 │   │
 │   ├── components/
 │   │   ├── Navbar.jsx
-│   │   ├── Frame.jsx
+│   │   ├── Chapter.jsx      # one memory: artwork + text + controls
+│   │   ├── MemoryImage.jsx  # real artwork, or generated fallback
+│   │   ├── FallbackArt.jsx  # SVG stand-in scenes
+│   │   ├── ProgressDots.jsx
 │   │   ├── Question.jsx
 │   │   ├── FinalScreen.jsx
+│   │   ├── Confetti.jsx
 │   │   └── FloatingElements.jsx
 │   │
 │   ├── data/
-│   │   └── story.js         # Story content & images
+│   │   ├── story.js         # chapter copy
+│   │   └── memoryImages.js  # maps slugs to files in assets/memories
 │   │
 │   ├── App.jsx
 │   ├── main.jsx
@@ -107,8 +117,22 @@ say-sorry-website/
 ├── index.html
 ├── package.json
 ├── tailwind.config.js
+├── vercel.json
 └── README.md
 ```
+
+---
+
+## **Adding Artwork**
+
+Each chapter looks for `src/assets/memories/<slug>.(jpg|png|webp)`, where the
+slug matches `src/data/story.js` — `nehru-place`, `illusions`, `tom-jerry`,
+`saket-evening`, `metro-hug`, `movie-call`, `sorry`.
+
+Drop a file in and it appears on the next build. No import, no code change.
+Chapters without a file show generated SVG art, so the site is never broken
+while artwork is still missing. See
+[`src/assets/memories/README.md`](src/assets/memories/README.md).
 
 ---
 
@@ -151,6 +175,40 @@ http://localhost:5173
 npm run build
 npm run preview
 ```
+
+---
+
+## **Deployment (CI/CD)**
+
+Two GitHub Actions workflows live in `.github/workflows/`:
+
+| Workflow     | Trigger                     | What it does                                     |
+| ------------ | --------------------------- | ------------------------------------------------ |
+| `ci.yml`     | push to `main`, PRs         | `npm ci`, `npm run lint`, `npm run build`         |
+| `deploy.yml` | push to `main`, PRs         | Runs CI, then deploys to Vercel                   |
+
+`deploy.yml` ships a **production** deploy for `main` and a **preview** deploy
+for pull requests. The deployment URL is written to the workflow run summary.
+
+### One-time setup
+
+The workflow authenticates with Vercel using three repository secrets. Add them
+under **Settings → Secrets and variables → Actions → New repository secret**:
+
+| Secret              | Where to get it                                                        |
+| ------------------- | ---------------------------------------------------------------------- |
+| `VERCEL_TOKEN`      | Vercel → Account Settings → Tokens → Create Token                       |
+| `VERCEL_ORG_ID`     | `vercel link`, then read `orgId` from the generated `.vercel/project.json` |
+| `VERCEL_PROJECT_ID` | same file, `projectId`                                                 |
+
+> `.vercel/` is gitignored — it holds local link state, not something to commit.
+
+### Note on double deploys
+
+If this repo is *also* connected through Vercel's own Git integration, every
+push will deploy twice — once by Vercel directly and once by this workflow.
+Pick one: either turn off the Git integration in the Vercel project settings, or
+delete `deploy.yml` and keep `ci.yml` for the lint/build checks.
 
 ---
 

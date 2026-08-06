@@ -2,16 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply font-cute antialiased;
+  }
+}
+
 @keyframes floatUp {
   0% {
     transform: translateY(0) scale(1);
     opacity: 0;
   }
   10% {
-    opacity: 0.6;
+    opacity: 0.45;
   }
   50% {
-    opacity: 0.8;
+    opacity: 0.6;
   }
   100% {
     transform: translateY(-120vh) scale(1.2);
@@ -23,5 +29,18 @@
   animation-name: floatUp;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  opacity: 0.5;
+  opacity: 0.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-element,
+  .animate-chapter-in,
+  .animate-confetti,
+  .animate-pop {
+    animation: none !important;
+  }
+
+  .floating-element {
+    display: none;
+  }
 }

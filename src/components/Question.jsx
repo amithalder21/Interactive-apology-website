@@ -1,157 +1,67 @@
-// import { useState } from "react";
-
-// const Question = ({ onYes }) => {
-//   const [noClicks, setNoClicks] = useState(0);
-//   const [pos, setPos] = useState({ top: "60%", left: "55%" });
-
-//   const moveNo = () => {
-//     if (noClicks >= 4) return;
-
-//     const top = Math.random() * 60 + 20;
-//     const left = Math.random() * 60 + 20;
-
-//     setPos({
-//       top: `${top}%`,
-//       left: `${left}%`,
-//     });
-
-//     setNoClicks((p) => p + 1);
-//   };
-
-//   return (
-//     <div className="flex-1 flex items-center justify-center relative px-10 py-20">
-
-//       {/* Question Card */}
-//       <div className="bg-white/90 backdrop-blur-xl rounded-[3rem] p-14 shadow-2xl text-center max-w-xl w-full">
-//         <h2 className="text-4xl font-semibold text-gray-700 mb-12">
-//           Kya ab tumhari narazgi chali gyi? 🥺
-//         </h2>
-
-//         <div className="flex items-center justify-center gap-12 relative">
-
-//           {/* YES BUTTON */}
-//           <button
-//             onClick={onYes}
-//             className="px-12 py-4 bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-full text-2xl font-medium shadow-lg hover:scale-105 transition-all duration-300"
-//           >
-//             Yes ❤️
-//           </button>
-
-//           {/* NO BUTTON */}
-//           {noClicks < 5 && (
-//             <button
-//               onMouseEnter={moveNo}
-//               onClick={moveNo}
-//               style={{
-//                 position: "absolute",
-//                 top: pos.top,
-//                 left: pos.left,
-//               }}
-//               className="px-12 py-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full text-2xl font-medium shadow-lg transition-all duration-300"
-//             >
-//               No 😤
-//             </button>
-//           )}
-//         </div>
-
-//         {noClicks >= 4 && (
-//           <p className="mt-10 text-lg text-gray-500 italic">
-//             Lagta hai jawab mil hi gaya… 😌💖
-//           </p>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Question;
 import { useState } from "react";
+
+// The "No" button dodges four times, then gives up and disappears.
+const DODGES = 5;
 
 const Question = ({ onYes }) => {
   const [noClicks, setNoClicks] = useState(0);
-  const [floating, setFloating] = useState(false);
-  const [pos, setPos] = useState({ top: "50%", left: "50%" });
+  const [pos, setPos] = useState(null);
 
-  const handleNoClick = () => {
+  const dodge = () => {
     const next = noClicks + 1;
     setNoClicks(next);
+    if (next >= DODGES) return;
 
-    // 5th click ke baad permanently gayab
-    if (next >= 5) return;
-
-    // No ko temporarily hide karo
-    setFloating(false);
-
-    // thodi der baad random jagah pop karo
-    setTimeout(() => {
-      const top = Math.random() * 60 + 20;
-      const left = Math.random() * 60 + 20;
-
-      setPos({
-        top: `${top}%`,
-        left: `${left}%`,
-      });
-
-      setFloating(true);
-    }, 300);
+    setPos({
+      top: `${Math.random() * 55 + 20}%`,
+      left: `${Math.random() * 55 + 20}%`,
+    });
   };
 
   return (
-    <div className="flex-1 flex items-center justify-center relative px-10 py-20">
+    <section className="animate-chapter-in mx-auto w-full max-w-2xl px-2 text-center">
+      <div className="relative rounded-[2.5rem] bg-cream/[0.07] p-8 shadow-glow ring-1 ring-cream/15 backdrop-blur-xl sm:p-12">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-marigold/80">
+          Sach sach batana
+        </p>
 
-      {/* Question Card */}
-      <div className="relative bg-white/90 backdrop-blur-xl rounded-[3rem] p-14 shadow-2xl text-center max-w-xl w-full">
-
-        <h2 className="text-4xl font-semibold text-gray-700 mb-14">
-          Kya ab tumhari narazagi kahatm ho gyii? 🥺
+        <h2 className="text-2xl font-medium leading-snug text-cream sm:text-4xl">
+          Ab tumhari narazgi khatam ho gayi? 🥺
         </h2>
 
-        {/* Button Area */}
-        <div className="relative h-40 flex items-center justify-center gap-10">
-
-          {/* YES BUTTON (stable) */}
+        <div className="relative mt-10 flex h-44 items-center justify-center gap-6">
           <button
+            type="button"
             onClick={onYes}
-            className="px-12 py-4 bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-full text-2xl font-medium shadow-lg hover:scale-105 transition-all duration-300 z-10"
+            className="z-10 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 px-10 py-4 text-xl font-semibold text-night shadow-glow transition-transform duration-300 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream sm:px-12"
           >
-            Yes ❤️
+            Haan ❤️
           </button>
 
-          {/* NO BUTTON — initial side-by-side */}
-          {noClicks === 0 && (
+          {noClicks < DODGES && (
             <button
-              onClick={handleNoClick}
-              className="px-12 py-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full text-2xl font-medium shadow-lg transition-all duration-300"
+              type="button"
+              onClick={dodge}
+              onMouseEnter={noClicks > 0 ? dodge : undefined}
+              style={
+                pos
+                  ? { position: "absolute", top: pos.top, left: pos.left, transform: "translate(-50%, -50%)" }
+                  : undefined
+              }
+              className="rounded-full bg-gradient-to-r from-rose to-pink-500 px-10 py-4 text-xl font-semibold text-night shadow-lg transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream sm:px-12"
             >
-              No 😤
-            </button>
-          )}
-
-          {/* NO BUTTON — floating version */}
-          {noClicks > 0 && noClicks < 5 && floating && (
-            <button
-              onClick={handleNoClick}
-              style={{
-                position: "absolute",
-                top: pos.top,
-                left: pos.left,
-                transform: "translate(-50%, -50%)",
-              }}
-              className="px-12 py-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full text-2xl font-medium shadow-lg transition-all duration-300"
-            >
-              No 😤
+              Nahi 😤
             </button>
           )}
         </div>
 
-        {/* Cute message after No disappears */}
-        {noClicks >= 5 && (
-          <p className="mt-10 text-lg text-gray-500 italic">
+        {noClicks >= DODGES && (
+          <p className="mt-2 text-base italic text-cream/60">
             Ab to sirf ek hi jawab bachta hai… 😌💖
           </p>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

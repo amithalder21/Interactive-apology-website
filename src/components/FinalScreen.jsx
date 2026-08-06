@@ -1,48 +1,30 @@
-// export default FinalScreen;
-import { useEffect, useState } from "react";
-import celebration from "../assets/images/celebration.png";
+import Confetti from "./Confetti";
 
-const FinalScreen = ({ onReplay }) => {
-  const [show, setShow] = useState(false);
+const FinalScreen = ({ onReplay }) => (
+  <section className="animate-chapter-in mx-auto w-full max-w-2xl px-2 text-center">
+    <div className="rounded-[2.5rem] bg-cream/[0.07] p-8 shadow-glow ring-1 ring-cream/15 backdrop-blur-xl sm:p-12">
+      <Confetti />
 
-  useEffect(() => {
-    const t = setTimeout(() => setShow(true), 200);
-    return () => clearTimeout(t);
-  }, []);
+      <h2 className="mt-8 text-2xl font-medium leading-snug text-cream sm:text-4xl">
+        Mujhe pata tha tum zyada der naraz nahi reh sakti 🥹💖
+      </h2>
 
-  return (
-    <div className="flex-1 flex items-center justify-center relative px-10 py-20">
-      <div
-        className={`bg-white/90 backdrop-blur-xl rounded-[3rem] p-14 shadow-2xl text-center max-w-2xl w-full transition-all duration-700 ${
-          show ? "opacity-100 scale-100" : "opacity-0 scale-95"
-        }`}
+      <p className="mt-5 text-lg text-rose sm:text-2xl">Ab bas smiles hi smiles 🎉</p>
+
+      <p className="mt-8 text-sm leading-relaxed text-cream/60">
+        Nehru Place se Saket tak, aur ab har raat wali movie call tak — <br className="hidden sm:block" />
+        har chapter mein tum ho, Bunny.
+      </p>
+
+      <button
+        type="button"
+        onClick={onReplay}
+        className="mt-10 rounded-full bg-gradient-to-r from-rose to-marigold px-10 py-3.5 text-lg font-semibold text-night shadow-glow transition-transform duration-300 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream"
       >
-        {/* Celebration Image */}
-        <img
-          src={celebration}
-          alt="celebration"
-          className="w-full max-h-[300px] object-contain mb-10"
-        />
-
-        {/* Final Message */}
-        <h1 className="text-4xl font-semibold text-gray-700 mb-6">
-          Mujhe pata tha tum zyada der naraz nahi reh sakti 🥹💖
-        </h1>
-
-        <p className="text-2xl text-rose-600 mb-10">
-          Ab bas smiles hi smiles 🎉❤️
-        </p>
-
-        {/* Replay */}
-        <button
-          onClick={onReplay}
-          className="px-10 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-xl font-medium shadow-lg hover:scale-105 transition-all duration-300"
-        >
-          Replay 🔁
-        </button>
-      </div>
+        Phir se dekhein 🔁
+      </button>
     </div>
-  );
-};
+  </section>
+);
 
 export default FinalScreen;

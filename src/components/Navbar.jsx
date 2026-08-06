@@ -1,15 +1,13 @@
-const Navbar = () => {
-  return (
-    <nav className="w-full px-8 py-4 flex items-center justify-between bg-white/40 backdrop-blur-md shadow-sm">
-      <h1 className="text-2xl font-semibold text-rose-600">
-        Bunny 💗
-      </h1>
+const Navbar = () => (
+  <header className="relative z-10 flex items-center justify-between gap-4 px-5 py-4 sm:px-10 sm:py-6">
+    <h1 className="text-xl font-semibold tracking-tight text-cream sm:text-2xl">
+      Anamika <span className="text-rose">💗</span>
+    </h1>
 
-      <p className="text-lg text-purple-600 font-medium">
-        Love you cutiee 💕
-      </p>
-    </nav>
-  );
-};
+    <p className="text-right text-xs font-medium uppercase tracking-[0.2em] text-marigold/80 sm:text-sm">
+      Hamari kahaani
+    </p>
+  </header>
+);
 
 export default Navbar;
