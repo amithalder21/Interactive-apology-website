@@ -1,5 +1,11 @@
 import MemoryImage from "./MemoryImage";
 
+const NUMBERS = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"];
+
+// Numbered from position, so reordering story.js never leaves a stale label.
+const labelFor = (memory, index) =>
+  memory.label ?? `Chapter ${NUMBERS[index] ?? index + 1}`;
+
 const Chapter = ({ memory, index, total, onNext, onBack, isLast }) => (
   <article
     key={memory.slug}
@@ -12,7 +18,7 @@ const Chapter = ({ memory, index, total, onNext, onBack, isLast }) => (
 
     <div className="text-center md:text-left">
       <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-marigold/80">
-        {memory.chapter}
+        {labelFor(memory, index)}
       </p>
 
       <p className="text-balance text-lg leading-relaxed text-cream sm:text-xl md:text-2xl md:leading-[1.55]">

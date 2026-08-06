@@ -3,15 +3,15 @@
 Drop the illustrations here. The filename (without extension) has to match the
 chapter's `slug` in [`src/data/story.js`](../../data/story.js):
 
-| File                  | Chapter                    |
-| --------------------- | -------------------------- |
-| `nehru-place.jpg`     | First meeting, Nehru Place |
-| `illusions.jpg`       | Museum of Illusions        |
-| `tom-jerry.jpg`       | Tom & Jerry                |
-| `saket-evening.jpg`   | The evening in Saket       |
-| `metro-hug.jpg`       | The hug at Saket metro     |
-| `movie-call.jpg`      | Movies over a phone call   |
-| `sorry.jpg`           | The apology                |
+| # | File                | Chapter                              |
+| - | ------------------- | ------------------------------------ |
+| 1 | `nehru-place.jpg`   | First outing — CR Park, Nehru Place  |
+| 2 | `movie-call.jpg`    | Lockdown movie nights over call      |
+| 3 | `illusions.jpg`     | Museum of Illusions                  |
+| 4 | `tom-jerry.jpg`     | Tom & Jerry                          |
+| 5 | `saket-evening.jpg` | The evening in Saket                 |
+| 6 | `metro-hug.jpg`     | The hug at Saket metro               |
+| 7 | `sorry.jpg`         | The apology                          |
 
 `.jpg`, `.jpeg`, `.png`, `.webp` and `.avif` all work. No import to add and no
 code to touch — the file is picked up automatically the next time Vite builds.
